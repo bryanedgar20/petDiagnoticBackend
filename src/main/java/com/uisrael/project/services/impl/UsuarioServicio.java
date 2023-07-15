@@ -22,4 +22,18 @@ public class UsuarioServicio implements IUsuarioServicio{
 		return this.usuarioRepositorio.findById(id).orElse(new Usuario());
 	}
 
+
+	@Override
+	public Usuario obtenerUsuarioPorCredenciales(String nickName, String clave) {
+		// TODO Auto-generated method stub
+		return this.usuarioRepositorio.obtenerUsuarioPorCredenciales(nickName, clave);
+	}
+
+
+	@Override
+	public void crearUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		this.usuarioRepositorio.saveAndFlush(usuario);
+	}
+
 }

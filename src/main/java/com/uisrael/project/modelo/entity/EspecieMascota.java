@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Entity
@@ -34,11 +37,11 @@ public class EspecieMascota implements Serializable{
 	private String estado;
 	private Date fechaRegistro;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "especieMascota", fetch = FetchType.LAZY)
     private List<RazaMascota> listaRazas;
 	
-	 
+	@JsonIgnore
 	@ManyToMany
     @JoinTable(
         name = "EspecieMascotaSintoma",

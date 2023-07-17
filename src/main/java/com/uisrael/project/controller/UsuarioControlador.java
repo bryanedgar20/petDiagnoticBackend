@@ -1,6 +1,5 @@
 package com.uisrael.project.controller;
 
-import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uisrael.project.modelo.entity.Usuario;
 import com.uisrael.project.services.IUsuarioServicio;
 import com.uisrael.project.vo.UsuarioVO;
@@ -31,30 +28,15 @@ public class UsuarioControlador {
 	@GetMapping("obtenerUsuarioLogin/{nickName}/{clave}")
 	public ResponseEntity<Usuario> obtenerUsuarioPorId(@PathVariable("nickName") String nickName,
 			@PathVariable("clave") String clave) {
-		return ResponseEntity.ok(this.usuarioServicio.obtenerUsuarioPorCredenciales(nickName,clave));
+		Usuario user =  this.usuarioServicio.obtenerUsuarioPorCredenciales(nickName,clave);
+		return ResponseEntity.ok(user);
 	}
 	
 	@PostMapping("crearActualizarUsuario")
-	public ResponseEntity<Boolean> obtenerUsuarioPorId(@RequestBody String request) throws Exception {
+	public ResponseEntity<Boolean> obtenerUsuarioPorId(@RequestBody Usuario request) {
 		
-		ObjectMapper objectMapper = new ObjectMapper();
-	    try {
-	        UsuarioVO usuarioVO = objectMapper.readValue(request, UsuarioVO.class);
-	       
-	        Usuario usuario = new Usuario();
-	        
-	        this.usuarioServicio.crearUsuario(usuario);
-	        return ResponseEntity.ok(Boolean.TRUE);
-	    } catch (IOException e) {
-	        // Manejar la excepción en caso de error de deserialización
-	       throw new Exception("Error al convertir:{}",e);
-	    }
+		this.usuarioServicio.crearUsuario(request);
+        return ResponseEntity.ok(Boolean.TRUE);
 		
-		
-		/*
-		 * Usuario usuario = (Usuario) request;
-		 * this.usuarioServicio.crearUsuario(usuario); return
-		 * ResponseEntity.ok(Boolean.TRUE);
-		 */
 	}
 }

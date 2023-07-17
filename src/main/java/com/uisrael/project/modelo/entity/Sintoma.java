@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Entity
@@ -35,14 +37,15 @@ public class Sintoma implements Serializable {
 	private String estado;
 	private Date fechaRegistro;
 	
+	@JsonProperty
 	 @ManyToMany(mappedBy = "sintomasEspecie")
 	 private List<EspecieMascota> especiesMascotas;
 	
-	
+	@JsonProperty
 	@ManyToMany(mappedBy = "sintomaMascota")
     private List<Mascota> listaMascotas;
 	
-	
+	@JsonProperty
 	@ManyToMany(mappedBy = "sintomasDiagnostico")
     private List<Diagnostico> listaDiagnosticos;
 }

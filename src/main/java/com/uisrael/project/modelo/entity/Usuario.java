@@ -12,6 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 
@@ -44,6 +48,8 @@ public class Usuario implements Serializable{
 	private String estado;
 	private Date fechaRegistro;
 	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private List<Mascota> listaMascotas = new ArrayList<>();
 }

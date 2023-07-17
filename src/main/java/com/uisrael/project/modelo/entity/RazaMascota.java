@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity
@@ -30,6 +32,7 @@ public class RazaMascota implements Serializable{
 	private String estado;
 	private Date fechaRegistro;
 	
+	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "especieMascota")
     private EspecieMascota especieMascota;

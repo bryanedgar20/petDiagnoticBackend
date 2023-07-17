@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Entity
@@ -35,10 +37,12 @@ public class Diagnostico implements Serializable{
 	private String medicamentosRecetados;
 	
 	
+	@JsonProperty
 	@ManyToOne
     @JoinColumn(name = "mascota")
     private Mascota mascota;
 	
+	@JsonProperty
 	@ManyToMany
     @JoinTable(
         name = "diagnostico_sintoma",

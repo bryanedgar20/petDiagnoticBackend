@@ -16,6 +16,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Entity
@@ -35,25 +39,33 @@ public class Mascota implements Serializable{
 	private String contextura;
 	private String descripcion;
 	private String colorPelaje;
+	private Double peso;
 	
 	private String estado;
 	private Date fechaRegistro;
 	
+	@JsonProperty
 	@ManyToOne
     @JoinColumn(name = "usuario")
     private Usuario usuario;
 	
+	@JsonProperty
 	@ManyToOne
     @JoinColumn(name = "especieMascota")
     private EspecieMascota especieMascota;
 
+	@JsonProperty
     @ManyToOne
     @JoinColumn(name = "razaMascota")
     private RazaMascota razaMascota;
     
+	
+	@JsonIgnore
     @OneToMany(mappedBy = "mascota", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Diagnostico> listaDiagnosticos;
     
+	
+	@JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "MascotaSintoma",

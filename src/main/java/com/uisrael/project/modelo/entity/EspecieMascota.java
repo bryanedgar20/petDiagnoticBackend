@@ -41,7 +41,7 @@ public class EspecieMascota implements Serializable{
 	@OneToMany(mappedBy = "especieMascota", fetch = FetchType.LAZY)
     private List<RazaMascota> listaRazas;
 	
-	@JsonIgnore
+	@JsonProperty
 	@ManyToMany
     @JoinTable(
         name = "EspecieMascotaSintoma",

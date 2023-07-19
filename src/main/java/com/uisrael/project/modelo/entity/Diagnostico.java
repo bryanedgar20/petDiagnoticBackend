@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,12 +31,14 @@ public class Diagnostico implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idDiagnostico;
 	private Date fechaDiagnostico;
+	
+	@Column(length = Integer.MAX_VALUE) 
 	private String tratamiento;
 	private String causasEnfermedad;
 	private String informacionAdicional;
 	private String duracionTratamiento;
 	private String medicamentosRecetados;
-	
+	private String fechaDiagnosticoStr;
 	
 	@JsonProperty
 	@ManyToOne

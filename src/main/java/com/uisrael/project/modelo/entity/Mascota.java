@@ -39,8 +39,10 @@ public class Mascota implements Serializable{
 	private String contextura;
 	private String descripcion;
 	private String colorPelaje;
+	private String genero;
+	private String alergias;
 	private Double peso;
-	
+	private String fechaNacimientoStr;
 	private String estado;
 	private Date fechaRegistro;
 	

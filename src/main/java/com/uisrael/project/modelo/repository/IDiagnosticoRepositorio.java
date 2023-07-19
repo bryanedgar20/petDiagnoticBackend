@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.uisrael.project.modelo.entity.EspecieMascota;
-import com.uisrael.project.modelo.entity.Mascota;
+import com.uisrael.project.modelo.entity.Diagnostico;
 
 @Repository
 @Component
-public interface IEspecieMascotaRepositorio extends JpaRepository<EspecieMascota, Integer>{
+public interface IDiagnosticoRepositorio extends JpaRepository<Diagnostico, Integer>{
 
-	
+	@Query("Select diag From Diagnostico diag where diag.mascota.idMascota = ?1")
+	List<Diagnostico> obtenerDiagnosticoPorMascota(int idMascota);
 }

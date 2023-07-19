@@ -1,28 +1,66 @@
 package com.uisrael.project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.uisrael.project.modelo.entity.Diagnostico;
+import com.uisrael.project.modelo.entity.Mascota;
+import com.uisrael.project.services.IDiagnosticoServicio;
 
 import io.github.flashvayne.chatgpt.dto.ChatRequest;
 import io.github.flashvayne.chatgpt.dto.ChatResponse;
 import io.github.flashvayne.chatgpt.service.ChatgptService;
 
 @RestController
-@RequestMapping("/chatboot")
+@RequestMapping("/diagnostico")
 public class DiagnosticoController implements InitializingBean{
 
 	@Autowired
     private ChatgptService chatgptService;
 
+	@Autowired
+	private IDiagnosticoServicio diagnosticoServicio;
+	
     @Override
     public void afterPropertiesSet() {
         System.out.println(" ===== Starting Chat GPT Boot ==== ");
     }
 
+    
+    @PostMapping("crearDiagnostico")
+	public ResponseEntity<String> crearDiagnostico(@RequestBody Diagnostico request) {
+		System.out.println("Mascota: "+request);
+		
+		String requestChatGpt = "Tengo la siguiente mascota con las siguientes caracteristicas"
+				+ "Es de la especie: "
+				+ request.getMascota().getEspecieMascota().getNombre() + "su raza es: "
+				+ request.getMascota().getRazaMascota().getNombre()+ " , y tiene los siguientes sintomas: "
+				+ String.join(",", request.getSintomasDiagnostico().stream().map(sintoma->sintoma.getNombreSintoma()).toList())
+				+ " Cual es la posible enfermedad que padece y cual es su cura?";
+		
+		System.out.println("request"+requestChatGpt);
+		String tratamiento = chatgptService.sendMessage(requestChatGpt);
+		request.setTratamiento(tratamiento);
+		this.diagnosticoServicio.guardarNuevoDiagnostico(request);
+		return ResponseEntity.ok(tratamiento);
+		
+	}
+    
+    @GetMapping("obtenerDiagnosticoPorMascota/{idMascota}")
+    public ResponseEntity<List<Diagnostico>> obtenerDiagnosticoPorMascota(@PathVariable("idMascota") int idMascota) {
+        return ResponseEntity.ok(this.diagnosticoServicio.obtenerDiagnosticoPorMascota(idMascota));
+    }
+    
     @GetMapping("/chat")
     public String chatWith(@RequestParam String message) {
         System.out.println(message);

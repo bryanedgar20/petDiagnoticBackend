@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.uisrael.project.modelo.entity.EspecieMascota;
-import com.uisrael.project.modelo.entity.Mascota;
+import com.uisrael.project.modelo.entity.Sintoma;
 
 @Repository
 @Component
-public interface IEspecieMascotaRepositorio extends JpaRepository<EspecieMascota, Integer>{
+public interface ISintomasRepositorio  extends JpaRepository<Sintoma, Integer>{
 
-	
+
 }

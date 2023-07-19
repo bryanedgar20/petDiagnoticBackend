@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.project.modelo.entity.EspecieMascota;
 import com.uisrael.project.modelo.entity.Mascota;
+import com.uisrael.project.modelo.entity.Sintoma;
 import com.uisrael.project.modelo.entity.Usuario;
+import com.uisrael.project.services.IEspecieServicio;
 import com.uisrael.project.services.IMascotaServicio;
+import com.uisrael.project.services.ISintomasServicio;
 
 @RestController
 @RequestMapping("/mascota")
@@ -22,6 +25,18 @@ public class MascotaControlador {
 
 	@Autowired
 	private IMascotaServicio mascotaServicio;
+	
+	@Autowired
+	private IEspecieServicio especieServicio;
+	
+	
+	@GetMapping("obtenerEspecie/{idEspecie}")
+	public ResponseEntity<List<Sintoma>> obtenerSintomasPorRaza(@PathVariable("idEspecie") int idEspecie) {
+		
+		EspecieMascota especieMascota = this.especieServicio.obtenerEspeciePorId(idEspecie);
+		List<Sintoma> listSintoma = especieMascota.getSintomasEspecie();
+		return ResponseEntity.ok(listSintoma);
+	}
 	
 	@GetMapping("obtenerEspeciePorId/{idEspecieMascota}")
 	public ResponseEntity<EspecieMascota> obtenerEspeciePorId(@PathVariable("idEspecieMascota") int idEspecieMascota) {
